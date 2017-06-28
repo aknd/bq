@@ -67,16 +67,23 @@ class BQClient(object):
         rows = []
         append = rows.append
 
-        while True:
-            page_rows, total_rows, page_token = query_results.fetch_data(
-                max_results=10 ** 8,
-                page_token=page_token)
+        # while True:
+        #     page_rows, total_rows, page_token = query_results.fetch_data(
+        #         max_results=10 ** 8,
+        #         page_token=page_token)
 
-            for row in page_rows:
+        #     for row in page_rows:
+        #         append(row)
+
+        #     if not page_token:
+        #         break
+
+        itr = query_results.fetch_data(
+            max_results=10 ** 8,
+            page_token=page_token)
+        for page in itr.pages:
+            for row in list(page):
                 append(row)
-
-            if not page_token:
-                break
 
         fields = [sch.name for sch in query_results.schema]
 
