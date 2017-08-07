@@ -61,7 +61,7 @@ class BQClient(object):
 
         self.wait_for_job(query_job)
 
-        query_results = query_job.results()
+        query_results = query_job.result()
         page_token = None
 
         rows = []
