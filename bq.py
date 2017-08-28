@@ -61,11 +61,12 @@ class BQClient(object):
 
         self.wait_for_job(query_job)
 
-        query_results = query_job.result()
+        # query_results = query_job.result()
+        query_job = query_job.result()
         page_token = None
 
-        rows = []
-        append = rows.append
+        # rows = []
+        # append = rows.append
 
         # while True:
         #     page_rows, total_rows, page_token = query_results.fetch_data(
@@ -78,12 +79,17 @@ class BQClient(object):
         #     if not page_token:
         #         break
 
-        itr = query_results.fetch_data(
-            max_results=10 ** 8,
-            page_token=page_token)
-        for page in itr.pages:
-            for row in list(page):
-                append(row)
+        # itr = query_results.fetch_data(
+        #     max_results=10 ** 8,
+        #     page_token=page_token)
+
+        query_results = query_job.query_results()
+        itr = iter(query_results.fetch_data())
+        rows = list(itr)
+
+        # for page in itr.pages:
+        #     for row in list(page):
+        #         append(row)
 
         fields = [sch.name for sch in query_results.schema]
 
