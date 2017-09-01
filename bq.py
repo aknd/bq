@@ -106,7 +106,7 @@ class BQClient(object):
 
         return table.exists()
 
-    def create_table(self, dataset_name, table_fullname, schema=None, view_query=None, overwrite=False):
+    def create_table(self, dataset_name, table_fullname, schema=None, view_query=None, overwrite=False, view_use_legacy_sql=True):
         if schema is None and view_query is None:
             sys.exit('Either schema or view_query is required')
 
@@ -140,6 +140,9 @@ class BQClient(object):
         if view_query is not None:
             print('View query:\n{}'.format(view_query))
             table.view_query = view_query
+
+        if view_use_legacy_sql is not None:
+            table.view_use_legacy_sql = view_use_legacy_sql
 
         table.create()
 
