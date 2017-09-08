@@ -226,7 +226,7 @@ class BQClient(object):
 
         return dates
 
-    def get_table_names_with_prefix(self, dataset_name, prefix, omit_prefix=True, omit_date=True):
+    def get_table_names_with_prefix(self, dataset_name, prefix, excludes=[], omit_prefix=True, omit_date=True):
         dataset = self.gcb_client.dataset(dataset_name)
 
         if not dataset.exists():
@@ -240,7 +240,7 @@ class BQClient(object):
             pattern = r'^(%s_?)([^_]+)(_?[\d]{%s,})$' % (prefix, DATE_STR_LEN)
 
             m = re.search(pattern, table.name)
-            if m:
+            if m and m.group(2) not in excludes:
                 table_name = ("" if omit_prefix else m.group(1)) + m.group(2) + ("" if omit_date else m.group(3))
                 append(table_name)
 
