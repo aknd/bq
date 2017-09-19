@@ -242,7 +242,8 @@ class BQClient(object):
             m = re.search(pattern, table.name)
             if m and m.group(2) not in excludes:
                 table_name = ("" if omit_prefix else m.group(1)) + m.group(2) + ("" if omit_date else m.group(3))
-                append(table_name)
+                if table_name not in table_names:
+                    append(table_name)
 
         return table_names
 
