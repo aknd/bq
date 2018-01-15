@@ -100,12 +100,11 @@ class BQSparkIO(object):
         else:
             return dfs[0]
 
-    def export_dfs(self, df_list, schema_filename, dataset_name, table_fullname, per=10, partition=1, gs_overwrite=False):
+    def export_dfs(self, df_list, schema_filename, dataset_name, table_fullname, per=10, partition=1, append=False, gs_overwrite=False):
         if not isinstance(df_list, list):
             df_list = [df_list]
 
         index = 0
-        append = False
 
         while len(df_list) > 0:
             export_list = []
