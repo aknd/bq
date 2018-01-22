@@ -35,7 +35,7 @@ class BQSparkIO(object):
             'mapred.bq.input.project.id': project_id,
             'mapred.bq.input.dataset.id': dataset_name,
             'mapred.bq.input.table.id': table_fullname,
-            # 'mapred.bq.input.sharded.export.enable': False,
+            'mapred.bq.input.sharded.export.enable': False,
         }
 
         if gs_overwrite:
