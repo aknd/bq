@@ -22,7 +22,6 @@ class BQSparkIO(object):
             .delete(tpath, True)
 
     def get_rdd_from_bq_via_gcs(self, project_id, dataset_name, table_fullname, gs_overwrite=False):
-
         bucket = self.spark.sparkContext._jsc.hadoopConfiguration().get('fs.gs.system.bucket')
         project = self.spark.sparkContext._jsc.hadoopConfiguration().get('fs.gs.project.id')
         folder_name = '{}.{}.{}'.format(dataset_name, table_fullname, uuid.uuid4())
@@ -36,7 +35,7 @@ class BQSparkIO(object):
             'mapred.bq.input.project.id': project_id,
             'mapred.bq.input.dataset.id': dataset_name,
             'mapred.bq.input.table.id': table_fullname,
-            'mapred.bq.input.sharded.export.enable': False,
+            # 'mapred.bq.input.sharded.export.enable': False,
         }
 
         if gs_overwrite:
